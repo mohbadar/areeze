@@ -13,6 +13,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade as PDF;
 
+use App\Charts\SampleChart;
+use App\Charts\UserChart;
+use App\User;
 
 class PageController extends Controller
 {
@@ -32,8 +35,9 @@ class PageController extends Controller
         $file_path = public_path('photos/' . $file);
 
         $shekayat = ShekayatForm::findOrFail($_GET['shekayatform_id']);
-
+        $shekayat->downloaded = 1;
         $shekayat->save();
+        
         return response()->Download($file_path);
     }
 
@@ -210,7 +214,25 @@ public function dashboard(){
     $shk=Areeza::where('gender',0)->count();
    /* $sta = Status::where('id','=', 2)->count();
     $status = Status::where('id','=', 3)->count();*/
-    return view('areeza.areeza_dashboard',compact('stat','kar','shk'));
+
+
+    $today_users = User::whereDate('created_at', today())->count();
+    $yesterday_users = User::whereDate('created_at', today()->subDays(1))->count();
+    $users_2_days_ago = User::whereDate('created_at', today()->subDays(2))->count();
+
+    // $chart = new SampleChart;
+    // $chart->labels(['2 days ago', 'Yesterday', 'Today']);
+    // $chart->dataset('My dataset', 'line', [$users_2_days_ago, $yesterday_users, $today_users]);
+    $chart = new SampleChart;
+    $chart->labels(['One', 'Two', 'Three', 'Four']);
+    $chart->dataset('My dataset', 'line', [1, 2, 3, 4]);
+    $chart->dataset('My dataset 2', 'line', [4, 3, 2, 1]);
+
+    $userChart = new UserChart;
+    $userChart->labels(['Test Label 1', 'Test Label 2']);
+    $userChart->dataset('User Data', 'pie', [4,32,543]); 
+
+    return view('areeza.areeza_dashboard',compact('stat','kar','shk', 'chart', 'userChart'));
 }
 
 

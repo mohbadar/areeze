@@ -9,15 +9,12 @@ use App\Confirm;
 
 class NotificationController extends Controller
 {
-    //
-
-    function getNotifications()
+   
+    public function getNotifications()
     {
         $statuses = Status::where('status_name', 'Rejected')->get('id');
-        // $notifications = Confirm::where('status_id', 'IN',$statuses )->get();
         $notifications = Confirm::all();
 
-        return response->json($notifications);
-
+        return response()->json($notifications);
     }
 }

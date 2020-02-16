@@ -54,6 +54,7 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+
 </head>
 
 <body class="hold-transition skin-info dark-sidebar sidebar-mini dash-transparent rtl bg-img" style="background-image: url(../../images/bg-2.jpg)" data-overlay="7">
@@ -68,9 +69,15 @@
     </aside>
 
 
+
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <div class="container-full">
+        
+
+            <div style="width:500px">
+            {!! $userChart->container()!!}
+            </div>
             <!-- Content Header (Page header) -->
             <div class="content-header">
                 <div class="d-flex align-items-center">
@@ -366,10 +373,10 @@
 
 <script src="../js/pages/widget-morris-charts.js"></script>
 
-
-
-
-
+   
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script>
+    {!! $chart->script() !!}
+    {!! $userChart->script() !!}
 
 </body>
 

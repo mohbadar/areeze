@@ -1,3 +1,28 @@
+<script type="text/javascript">
+  
+   $(document).ready(function(){
+
+     $.ajax({
+            url:  '/notifications',
+            type:  'get',
+            dataType:  'json',
+            success: function  (data){
+
+                console.log("data: ", data)
+                   $('.notifications').empty();
+                   var rows =  '';
+                   data.notifications.forEach(item => {
+                        rows += `
+                        <li><a href="/notifications/${item.id}">${item.description}</a></li>
+                        `
+                })
+               $('.notifications').append(rows);
+           }
+       });
+
+   });
+</script>
+
 <header class="main-header">
     <!-- Logo -->
     <a href="index.html" class="logo">
@@ -46,7 +71,6 @@
                             <div class="bg-img text-white p-20" style="background-image: url(../../images/user-info.jpg)" data-overlay="5">
                                 <div class="flexbox">
                                     <div>
-                                        <h3 class="mb-0 mt-0">7 New</h3>
                                         <span class="font-light">Notifications</span>
                                     </div>
                                     <div class="font-size-40">
@@ -58,42 +82,8 @@
 
                         <li>
                             <!-- inner menu: contains the actual data -->
-                            <ul class="menu sm-scrol">
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-users text-info"></i> Curabitur id eros quis nunc suscipit blandit.
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-warning text-warning"></i> Duis malesuada justo eu sapien elementum, in semper diam posuere.
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-users text-danger"></i> Donec at nisi sit amet tortor commodo porttitor pretium a erat.
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-shopping-cart text-success"></i> In gravida mauris et nisi
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-user text-danger"></i> Praesent eu lacus in libero dictum fermentum.
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-user text-primary"></i> Nunc fringilla lorem
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-user text-success"></i> Nullam euismod dolor ut quam interdum, at scelerisque ipsum imperdiet.
-                                    </a>
-                                </li>
+                            <ul class="menu sm-scrol notifications">
+                          
                             </ul>
                         </li>
                         <li class="footer"><a href="#" class="text-white bg-danger">View all</a></li>
